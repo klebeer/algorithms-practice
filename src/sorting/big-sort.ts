@@ -1,22 +1,51 @@
-export const bigSorting = (unsorted: string[]) => {
-  // compareNumbersAsStrings is a comparator function used in the sort method.
-  // It compares two strings based on their numeric value, not just lexicographic order.
+/**
+ * Sorts an array of strings that represent large numbers.
+ *
+ * This function uses a custom comparator to sort the strings not by their
+ * lexicographic order, but by their numeric values. It's particularly useful
+ * for sorting strings representing large numbers, where standard string
+ * sorting would not suffice.
+ *
+ * @param {string[]} unsorted - An array of string representations of large numbers.
+ * @returns {string[]} The array sorted in ascending order based on the numeric
+ *                      value of the strings.
+ *
+ * @example
+ * bigSorting(["3", "111", "22"]); // returns ["3", "22", "111"]
+ *
+ * Time Complexity: O(n log n * m), where n is the number of elements in the array,
+ * and m is the length of the longer string in the comparison.
+ */
+export const bigSorting = (unsorted: string[]): string[] => {
   const compareNumbersAsStrings = (a: string, b: string) => {
-    // First, compare based on length. A shorter string means a smaller number.
-    if (a.length < b.length) return -1
-    if (a.length > b.length) return 1
+    if (a.length < b.length) return -1;
+    if (a.length > b.length) return 1;
+    return a.localeCompare(b);
+  };
 
-    // If the lengths are the same, compare lexicographically.
-    // localeCompare compares two strings in the current locale, which is useful
-    // for sorting strings that represent large numbers.
-    return a.localeCompare(b)
+  return unsorted.sort(compareNumbersAsStrings);
+
+
+};
+export const bubbleBigSorting = (unsorted: string[]): string[] => {
+  const compareNumbersAsStrings = (a: string, b: string) => {
+    if (a.length < b.length) return -1;
+    if (a.length > b.length) return 1;
+    return a.localeCompare(b);
+  };
+
+  const sorted = [...unsorted];
+  const n = sorted.length;
+
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n - i - 1; j++) {
+      if (compareNumbersAsStrings(sorted[j], sorted[j + 1]) > 0) {
+        [sorted[j], sorted[j + 1]] = [sorted[j + 1], sorted[j]];
+      }
+    }
   }
 
-  // The sort method has a time complexity of O(n log n) on average,
-  // where n is the number of elements in the array.
-  // The comparator adds a complexity of O(m) for each comparison,
-  // where m is the length of the longer string in the comparison.
-  // Therefore, the overall worst-case time complexity of this sort
-  // with the custom comparator is O(n log n * m).
-  return unsorted.sort(compareNumbersAsStrings)
-}
+  return sorted;
+};
+
+
