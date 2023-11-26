@@ -1,49 +1,55 @@
 /**
  * Merges two sorted sub-arrays into a single sorted array.
  *
- * This function takes two sorted sub-arrays and merges them into one array in a sorted manner.
- * It compares elements from each subarray and arranges them in ascending order in the resulting array.
+ * This generic function takes two sorted sub-arrays and merges them into one array in a sorted manner.
+ * It compares elements from each subarray, whether they are numbers or strings, and arranges them in
+ * ascending order in the resulting array. It is a versatile function that can be used as part of the
+ * merge sort algorithm for both numeric and string arrays.
  *
- * @param {number[]} left - The first sorted subarray.
- * @param {number[]} right - The second sorted subarray.
- * @returns {number[]} A merged and sorted array.
+ * @template T The type of elements in the arrays, constrained to number or string.
+ * @param {T[]} left - The first sorted subarray.
+ * @param {T[]} right - The second sorted subarray.
+ * @returns {T[]} A merged and sorted array.
  *
  * @example
  * merge([1, 3], [2, 4]); // returns [1, 2, 3, 4]
+ * merge(["apple", "banana"], ["cherry", "date"]); // returns ["apple", "banana", "cherry", "date"]
  */
-const merge = (left: number[], right: number[]): number[] => {
-  let resultArray: number[] = [];
+const merge = <T extends number | string>(left: T[], right: T[]): T[] => {
+  let resultArray: T[] = [];
   let leftIndex = 0;
   let rightIndex = 0;
 
   while (leftIndex < left.length && rightIndex < right.length) {
-    resultArray = resultArray.concat(
-      left[leftIndex] < right[rightIndex] ? left[leftIndex++] : right[rightIndex++],
-    );
+    if (left[leftIndex] < right[rightIndex]) {
+      resultArray = resultArray.concat(left[leftIndex++]);
+    } else {
+      resultArray = resultArray.concat(right[rightIndex++]);
+    }
   }
 
-  return resultArray
-    .concat(left.slice(leftIndex))
-    .concat(right.slice(rightIndex));
+  return resultArray.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
 };
 
-
 /**
- * Sorts an array of numbers using the Merge Sort algorithm.
+ * Sorts an array of numbers or strings using the Merge Sort algorithm.
  *
  * This function implements the Merge Sort algorithm, a divide and conquer algorithm
  * that divides the input array into two halves, calls itself for the two halves,
- * and then merges the two sorted halves.
+ * and then merges the two sorted halves. It is capable of sorting arrays of both
+ * numbers and strings, using a generic merge function that handles both types.
  *
- * @param {number[]} unsorted - An array of numbers to be sorted.
- * @returns {number[]} The sorted array.
+ * @template T The type of elements in the array, constrained to number or string.
+ * @param {T[]} unsorted - An array of numbers or strings to be sorted.
+ * @returns {T[]} The sorted array.
  *
  * @example
  * mergeSort([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]); // returns [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]
+ * mergeSort(["banana", "apple", "cherry"]); // returns ["apple", "banana", "cherry"]
  *
  * Time Complexity: O(n log n), where n is the number of elements in the array.
  */
-export const mergeSort = (unsorted: number[]): number[] => {
+export const mergeSort = <T extends number | string>(unsorted: T[]): T[] => {
   if (unsorted.length <= 1) {
     return unsorted;
   }

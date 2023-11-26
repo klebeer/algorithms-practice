@@ -31,4 +31,23 @@ describe('mergeSort', () => {
     expect(sortedArray).toEqual([1, 1, 3, 4, 5]);
   });
 
+  it('should correctly sort an array of strings', () => {
+    const unsortedArray = ['banana', 'apple', 'cherry'];
+    const sortedArray = mergeSort(unsortedArray);
+    expect(sortedArray).toEqual(['apple', 'banana', 'cherry']);
+  });
+
+
+  it('should handle an array of strings with repeated elements', () => {
+    const unsortedArray = ['apple', 'cherry', 'banana', 'apple'];
+    const sortedArray = mergeSort(unsortedArray);
+    expect(sortedArray).toEqual(['apple', 'apple', 'banana', 'cherry']);
+  });
+
+  it('should correctly sort an array of strings with varying lengths', () => {
+    const unsortedArray = ['a', 'abc', 'ab'];
+    const sortedArray = mergeSort(unsortedArray);
+    expect(sortedArray).toEqual(['a', 'ab', 'abc']);
+  });
+
 });
