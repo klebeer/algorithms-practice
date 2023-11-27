@@ -6,6 +6,7 @@ module.exports = {
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/'],
   moduleNameMapper: {
     '^@sorting/(.*)$': '<rootDir>/src/sorting/$1',
+    '^@random/(.*)$': '<rootDir>/src/random/$1',
   },
 };
 

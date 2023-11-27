@@ -12,6 +12,9 @@
       "@sorting/*": [
         "src/sorting/*"
       ],
+      "@random/*": [
+        "src/random/*"
+      ]
     }
   },
   "include": ["src"],
